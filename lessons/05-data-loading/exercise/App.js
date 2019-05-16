@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "app/utils"
 import LoggedIn from "app/LoggedIn"
 import LoggedOut from "app/LoggedOut"
 
-export default function App() {
+function useAuth() {
   const [auth, setAuth] = useState(null)
   const [authAttempted, setAuthAttempted] = useState(false)
 
@@ -15,6 +15,12 @@ export default function App() {
       setAuth(auth)
     })
   }, [])
+
+  return { auth, authAttempted }
+}
+
+export default function App() {
+  const { auth, authAttempted } = useAuth()
 
   if (!authAttempted) {
     return <p>Authenticating...</p>

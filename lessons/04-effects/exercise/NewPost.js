@@ -24,6 +24,14 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
     setLocalStorage(storageKey, message)
   }, [message, storageKey])
 
+  useEffect(() => {
+    if (takeFocus) {
+      inputRef.current.focus()
+    }
+  }, [takeFocus])
+
+  const inputRef = useRef()
+
   return (
     <div className={"NewPost" + (messageTooLong ? " NewPost_error" : "")}>
       {showAvatar && <Avatar uid={auth.uid} size={70} />}
@@ -32,6 +40,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
           className="NewPost_input"
           placeholder="Tell us about your workout!"
           value={message}
+          ref={inputRef}
           onChange={handleMessageChange}
         />
         <div className="NewPost_char_count">

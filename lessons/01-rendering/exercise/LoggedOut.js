@@ -9,7 +9,7 @@ import About from "app/About"
 export default function LoggedOut() {
   return (
     <div className="LoggedOut">
-      <About/>
+      <About />
       <Tabs>
         <TabList>
           <Tab>Signup</Tab>
@@ -17,10 +17,10 @@ export default function LoggedOut() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <SignupForm/>
+            <SignupForm />
           </TabPanel>
           <TabPanel>
-            <LoginForm/>
+            <LoginForm />
           </TabPanel>
         </TabPanels>
       </Tabs>

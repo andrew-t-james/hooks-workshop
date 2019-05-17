@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Fragment, useState } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
 import { FaDumbbell } from "react-icons/fa"
@@ -58,12 +59,11 @@ export default function SignupForm() {
         <TextInput id="password" label="Password" />
         <p>
           <span>Start:</span>{" "}
-          <DateFields
-            value={startDate}
-            onChange={setStartDate}
-            start={2018}
-            end={2019}
-          />
+          <DateFields value={startDate} onChange={setStartDate}>
+            <MonthField aria-label="Start Month" />
+            <DayField aria-label="Start Day" />
+            <YearField start={2018} end={2019} aria-label="Start year" />
+          </DateFields>
         </p>
         <TabsButton>
           <FaDumbbell />

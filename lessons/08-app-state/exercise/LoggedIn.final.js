@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, Fragment } from "react"
 import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
 import { fetchUser, isValidDate } from "app/utils"

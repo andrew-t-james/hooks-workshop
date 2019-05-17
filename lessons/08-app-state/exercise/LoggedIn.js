@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, Fragment } from "react"
 import { Router, Route, DefaultRoute } from "app/packages/react-router-next"
 import { fetchUser, isValidDate } from "app/utils"
@@ -10,7 +11,15 @@ import User from "app/User"
 import NotFound from "app/NotFound"
 
 export default function LoggedIn() {
-  const user = null
+  const [{ user, auth }, dispatch] = useAppState()
+
+  useEffect(() => {
+    if (!user) {
+      fetchUser(auth.uid).then(user => {
+        dispatch({ type: "LOAD_USER", user })
+      })
+    }
+  }, [auth.uid, dispatch, user])
 
   return user ? (
     <Fragment>
@@ -42,7 +51,9 @@ export default function LoggedIn() {
         </Router>
       </div>
     </Fragment>
-  ) : <div>No user! Go fix it :D</div>
+  ) : (
+    <div>No user! Go fix it :D</div>
+  )
 }
 
 const hasValidDateParam = ({ params }) => {

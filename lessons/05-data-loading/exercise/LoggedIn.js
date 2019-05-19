@@ -15,8 +15,8 @@ function LoggedIn() {
   const [{ auth, user }, dispatch] = useAppState()
 
   useEffect(() => {
+    let isCurrent = true
     if (!user) {
-      let isCurrent = true
       fetchDoc(`users/${auth.uid}`).then(user => {
         if (isCurrent) {
           dispatch({ type: "LOAD_USER", user })

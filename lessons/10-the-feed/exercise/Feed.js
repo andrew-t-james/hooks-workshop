@@ -7,34 +7,48 @@ import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
 export default Feed
 
 function Feed() {
+  let feedState = null
   const [state, dispatch] = useReducer(
     (state, action) => {
       console.log(action)
       switch (action.type) {
         case "LOAD_POSTS":
           return { ...state, posts: action.posts }
+        case "LOAD_NEW_POSTS":
+          return { ...state, newPosts: action.posts }
         default: {
-          return { ...state }
         }
       }
     },
-    {
-      posts: null
+    feedState || {
+      posts: [],
+      createdBefore: Date.now(),
+      newPosts: []
     }
   )
 
-  const { posts } = state
+  const { posts, createdBefore } = state
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    feedState = state
+  })
 
   useEffect(() => {
     let current = true
     if (current) {
       loadFeedPosts(Date.now(), 10).then(data => {
-        console.log("data:", data)
         dispatch({ type: "LOAD_POSTS", posts: data })
       })
     }
     return () => (current = false)
   }, [])
+
+  useEffect(() => {
+    return subscribeToNewFeedPosts(createdBefore, posts => {
+      dispatch({ type: "LOAD_NEW_POSTS", posts })
+    })
+  }, [createdBefore])
 
   return (
     <div className="Feed">
